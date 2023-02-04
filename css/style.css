@@ -1,0 +1,27 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+  background-color: #74992e;
+}
+.container{
+  border: 1px solid #000;
+  max-width: 1100px;
+  height: 900px;
+}
+.form-control{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.inp{
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+  caret-color: red;
+  font-size: 1rem;
+  font-family: cursive;  
+}

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="refresh" content="5; url=index2.html">
+    <title>[rais={buwa}]</title>
+    <link rel="icon" href="./img/shlyapa.jpg">
+    <style>
+@import url("https://fonts.googleapis.com/css2?family=Asap&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  background: black;
+}
+canvas {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  margin: 0;
+  padding: 0;
+  filter: blur(0.3vmax) contrast(2);
+}
+#contents {
+  position: relative;
+  color: white;
+  z-index: 1;
+}
+h1 {
+  position: fixed;
+  top: 45%;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  font-family: "Asap", sans-serif;
+  font-size: 7vw;
+}
+
+    </style>
+</head>
+<body>
+
+<!-- Bokeh Lighting -->
+
+<div id="contents">
+    <h1>[rais🐺⚜️{buwa}]</h1>
+  </div>
+  
+  <script type="x-shader/x-vertex" id="vertexshader">
+    attribute float size;
+              varying vec3 vColor;
+              void main() {
+                  vColor = color;
+                  vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+                  gl_PointSize = size * ( 300.0 / -mvPosition.z );
+                  gl_Position = projectionMatrix * mvPosition;
+              }
+          </script>
+  
+  <script type="x-shader/x-fragment" id="fragmentshader">
+    uniform sampler2D pointTexture;
+              varying vec3 vColor;
+              void main() {
+                  gl_FragColor = vec4( vColor, 1.0 );
+                  gl_FragColor = gl_FragColor * texture2D( pointTexture, gl_PointCoord );
+              }
+          </script>
+
+
+          <script>
+            /*!
+BokehLightingBackground.js
+Copyright (c) 2023 Wakana Y.K.
+URL:https://codepen.io/wakana-k/pen/YzjYzJE
+*/
+!function() {
+    "use strict";
+    function e() {
+        t.aspect = window.innerWidth / window.innerHeight, t.updateProjectionMatrix(), i.setSize(window.innerWidth, window.innerHeight);
+    }
+    let t, n, i, o, r, a, d;
+    const s = 1e3, E = 50, u = 10;
+    !function() {
+        const w = document.createElement("div");
+        document.body.appendChild(w), n = new THREE.Scene(), (i = new THREE.WebGLRenderer({
+            antialias: !0,
+            alpha: !0
+        })).setPixelRatio(window.devicePixelRatio), i.setSize(window.innerWidth, window.innerHeight), 
+        i.outputEncoding = THREE.sRGBEncoding, w.appendChild(i.domElement), (t = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, .01, 3 * E)).position.set(0, 0, E), 
+        t.lookAt(0, 0, 0);
+        const l = new THREE.AmbientLight(16777215);
+        n.add(l), n.fog = new THREE.FogExp2(0, .003), d = {
+            pointTexture: {
+                value: new THREE.TextureLoader().load("https://threejs.org/examples/textures/sprites/spark1.png")
+            }
+        };
+        const h = new THREE.ShaderMaterial({
+            uniforms: d,
+            vertexShader: document.getElementById("vertexshader").textContent,
+            fragmentShader: document.getElementById("fragmentshader").textContent,
+            blending: THREE.AdditiveBlending,
+            depthTest: !1,
+            transparent: !0,
+            vertexColors: !0
+        });
+        r = new THREE.BufferGeometry();
+        const m = [], p = [], c = [], g = new THREE.Color();
+        for (let e = 0; e < s; e++) m.push((2 * Math.random() - 1) * E), m.push((2 * Math.random() - 1) * E), 
+        m.push((2 * Math.random() - 1) * E), g.setHSL(e / s, 1, .65), p.push(g.r, g.g, g.b), 
+        c.push(u);
+        r.setAttribute("position", new THREE.Float32BufferAttribute(m, 3)), r.setAttribute("color", new THREE.Float32BufferAttribute(p, 3)), 
+        r.setAttribute("size", new THREE.Float32BufferAttribute(c, 1).setUsage(THREE.DynamicDrawUsage)), 
+        a = new THREE.Points(r, h), n.add(a), (o = new THREE.OrbitControls(t, i.domElement)).autoRotate = !0, 
+        o.autoRotateSpeed = 1, o.enableDamping = !0, o.enablePan = !1, o.minDistance = .1, 
+        o.maxDistance = E * Math.sqrt(2), o.minPolarAngle = 0, o.maxPolarAngle = Math.PI / 2, 
+        o.target.set(0, 0, 0), o.update(), window.addEventListener("resize", e);
+    }(), function e() {
+        requestAnimationFrame(e), o.update(), i.render(n, t);
+    }();
+}();
+          </script>
+    
+    
+</body>
+</html>
